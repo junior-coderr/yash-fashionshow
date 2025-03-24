@@ -3,19 +3,35 @@ import { sendEmailVerificationOTP, verifyOTP } from "@/lib/email";
 import { cookies } from "next/headers";
 import crypto from "crypto";
 
-// Encryption helper functions
-function encryptData(data, secret = process.env.OTP_ENCRYPTION_SECRET || 'default-secret-key-change-in-prod') {
-  const cipher = crypto.createCipher('aes-256-cbc', secret);
+// Encryption helper functions using modern crypto methods
+function encryptData(data, secretKey = process.env.OTP_ENCRYPTION_SECRET || 'default-secret-key-change-in-prod') {
+  // Create a buffer from the secret key and get the first 32 bytes for AES-256
+  const key = crypto.createHash('sha256').update(String(secretKey)).digest('base64').substring(0, 32);
+  // Generate a random initialization vector
+  const iv = crypto.randomBytes(16);
+  // Create cipher with key and iv
+  const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+  // Encrypt the data
   let encrypted = cipher.update(JSON.stringify(data), 'utf8', 'hex');
   encrypted += cipher.final('hex');
-  return encrypted;
+  // Return iv + encrypted data
+  return iv.toString('hex') + ':' + encrypted;
 }
 
-function decryptData(encrypted, secret = process.env.OTP_ENCRYPTION_SECRET || 'default-secret-key-change-in-prod') {
+function decryptData(encrypted, secretKey = process.env.OTP_ENCRYPTION_SECRET || 'default-secret-key-change-in-prod') {
   try {
-    const decipher = crypto.createDecipher('aes-256-cbc', secret);
-    let decrypted = decipher.update(encrypted, 'hex', 'utf8');
+    // Create a buffer from the secret key and get the first 32 bytes for AES-256
+    const key = crypto.createHash('sha256').update(String(secretKey)).digest('base64').substring(0, 32);
+    // Split iv and encrypted data
+    const textParts = encrypted.split(':');
+    const iv = Buffer.from(textParts[0], 'hex');
+    const encryptedData = textParts[1];
+    // Create decipher with key and iv
+    const decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
+    // Decrypt the data
+    let decrypted = decipher.update(encryptedData, 'hex', 'utf8');
     decrypted += decipher.final('utf8');
+    // Return parsed data
     return JSON.parse(decrypted);
   } catch (error) {
     console.error('Failed to decrypt data:', error);
