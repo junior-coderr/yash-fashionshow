@@ -5,19 +5,16 @@ import { verifyToken } from "@/lib/auth";
 const ADMIN_PATHS = ["/admin", "/api/admin"];
 
 export function middleware(request) {
-  const { pathname, origin, hostname } = request.nextUrl;
+  const { pathname } = request.nextUrl;
   
-  // Check if the request is using HTTP instead of HTTPS
-  // Skip this check for localhost and development environments
-  if (
-    process.env.NODE_ENV === "production" && 
-    !hostname.includes("localhost") &&
-    !hostname.includes("127.0.0.1") &&
-    request.headers.get("x-forwarded-proto") === "http"
-  ) {
-    // Create new URL with https
-    const httpsUrl = `https://${hostname}${request.nextUrl.pathname}${request.nextUrl.search}`;
-    return NextResponse.redirect(httpsUrl, 301);
+  // HTTP to HTTPS redirect - specifically for Heroku and other hosting platforms
+  const proto = request.headers.get("x-forwarded-proto") || "";
+  
+  // For Heroku and similar hosting platforms
+  if (proto === "http") {
+    const url = new URL(request.url);
+    url.protocol = "https:";
+    return NextResponse.redirect(url.toString(), 301);
   }
 
   // Skip middleware for non-admin routes and login routes
