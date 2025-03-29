@@ -12,9 +12,9 @@ export async function GET() {
     if (!costs) {
       // Create default costs if none exist
       costs = await CategoryCosts.create({
-        modelWalk: 499,
-        dance: 499,
-        movieSelection: 499,
+        modelWalk: 5000,
+        dance: 5000,
+        movieSelection: 5000,
       });
     }
 

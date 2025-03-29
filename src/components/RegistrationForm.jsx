@@ -41,6 +41,7 @@ export default function RegistrationForm() {
   const [pendingNavigation, setPendingNavigation] = useState(null);
   const [paymentQRCode, setPaymentQRCode] = useState(null);
   const [loadingQR, setLoadingQR] = useState(false);
+  const [loadingCosts, setLoadingCosts] = useState(true); // New state for tracking cost loading
   
   // Email verification states
   const [showEmailVerification, setShowEmailVerification] = useState(false);
@@ -51,9 +52,9 @@ export default function RegistrationForm() {
   const [registrationDetails, setRegistrationDetails] = useState(null);
 
   const [categoryCosts, setCategoryCosts] = useState({
-    modelWalk: 499,
-    dance: 499,
-    movieSelection: 499,
+    modelWalk: 5000,
+    dance: 5000,
+    movieSelection: 5000,
   });
 
   // Check URL params on initial load to restore state
@@ -91,6 +92,7 @@ export default function RegistrationForm() {
 
   const fetchCategoryCosts = async () => {
     try {
+      setLoadingCosts(true);
       const response = await fetch("/api/admin/costs");
       const data = await response.json();
       if (response.ok) {
@@ -98,6 +100,8 @@ export default function RegistrationForm() {
       }
     } catch (error) {
       console.error("Error fetching category costs:", error);
+    } finally {
+      setLoadingCosts(false);
     }
   };
 
@@ -900,9 +904,16 @@ export default function RegistrationForm() {
                           <div className="text-sm text-gray-500">
                             Showcase your style on the runway
                           </div>
-                          {/* <div className="text-sm text-blue-600 font-semibold">
-                            ₹{categoryCosts.modelWalk}
-                          </div> */}
+                          <div className="text-sm text-blue-600 font-semibold">
+                            {loadingCosts ? (
+                              <span className="flex items-center">
+                                <div className="h-3 w-3 mr-1 rounded-full border-2 border-blue-600 border-t-transparent animate-spin"></div>
+                                Loading price...
+                              </span>
+                            ) : (
+                              `₹${categoryCosts.modelWalk}`
+                            )}
+                          </div>
                         </div>
                       </div>
                     </label>
@@ -947,9 +958,16 @@ export default function RegistrationForm() {
                           <div className="text-sm text-gray-500">
                             Express yourself through fashion design
                           </div>
-                          {/* <div className="text-sm text-blue-600 font-semibold"> */}
-                            {/* ₹{categoryCosts.dance} */}
-                          {/* </div> */}
+                          <div className="text-sm text-blue-600 font-semibold">
+                            {loadingCosts ? (
+                              <span className="flex items-center">
+                                <div className="h-3 w-3 mr-1 rounded-full border-2 border-blue-600 border-t-transparent animate-spin"></div>
+                                Loading price...
+                              </span>
+                            ) : (
+                              `₹${categoryCosts.dance}`
+                            )}
+                          </div>
                         </div>
                       </div>
                     </label>
@@ -996,9 +1014,16 @@ export default function RegistrationForm() {
                           <div className="text-sm text-gray-500">
                             Participate in movie selection challenge
                           </div>
-                          {/* <div className="text-sm text-blue-600 font-semibold">
-                            ₹{categoryCosts.movieSelection}
-                          </div> */}
+                          <div className="text-sm text-blue-600 font-semibold">
+                            {loadingCosts ? (
+                              <span className="flex items-center">
+                                <div className="h-3 w-3 mr-1 rounded-full border-2 border-blue-600 border-t-transparent animate-spin"></div>
+                                Loading price...
+                              </span>
+                            ) : (
+                              `₹${categoryCosts.movieSelection}`
+                            )}
+                          </div>
                         </div>
                       </div>
                     </label>

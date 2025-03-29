@@ -12,9 +12,9 @@ export default function PaymentQRManager() {
   
   // Category costs state
   const [categoryCosts, setCategoryCosts] = useState({
-    modelWalk: 499,
-    dance: 499,
-    movieSelection: 499,
+    modelWalk: 5000,
+    dance: 5000,
+    movieSelection: 5000,
   });
   
   // New QR code form state
@@ -280,7 +280,14 @@ export default function PaymentQRManager() {
               />
               <div className="flex flex-col">
                 <span>Model Selection</span>
-                <span className="text-xs text-gray-500">₹{categoryCosts.modelWalk}</span>
+                {loading ? (
+                  <span className="text-xs text-gray-500 flex items-center">
+                    <div className="h-3 w-3 mr-1 rounded-full border-2 border-blue-600 border-t-transparent animate-spin"></div>
+                    Loading...
+                  </span>
+                ) : (
+                  <span className="text-xs text-gray-500">₹{categoryCosts.modelWalk}</span>
+                )}
               </div>
             </label>
             
@@ -292,8 +299,15 @@ export default function PaymentQRManager() {
                 className="h-4 w-4 text-blue-600 mr-2"
               />
               <div className="flex flex-col">
-                <span>Dance</span>
-                <span className="text-xs text-gray-500">₹{categoryCosts.dance}</span>
+                <span>Fashion Designer</span>
+                {loading ? (
+                  <span className="text-xs text-gray-500 flex items-center">
+                    <div className="h-3 w-3 mr-1 rounded-full border-2 border-blue-600 border-t-transparent animate-spin"></div>
+                    Loading...
+                  </span>
+                ) : (
+                  <span className="text-xs text-gray-500">₹{categoryCosts.dance}</span>
+                )}
               </div>
             </label>
             
@@ -306,7 +320,14 @@ export default function PaymentQRManager() {
               />
               <div className="flex flex-col">
                 <span>Movie Selection</span>
-                <span className="text-xs text-gray-500">₹{categoryCosts.movieSelection}</span>
+                {loading ? (
+                  <span className="text-xs text-gray-500 flex items-center">
+                    <div className="h-3 w-3 mr-1 rounded-full border-2 border-blue-600 border-t-transparent animate-spin"></div>
+                    Loading...
+                  </span>
+                ) : (
+                  <span className="text-xs text-gray-500">₹{categoryCosts.movieSelection}</span>
+                )}
               </div>
             </label>
           </div>

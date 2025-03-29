@@ -7,19 +7,19 @@ const categoryCostsSchema = new Schema({
     type: Number,
     required: [true, "Fashion Designer cost is required"],
     min: [0, "Cost cannot be negative"],
-    default: 499,
+    default: 5000,
   },
   dance: {
     type: Number,
     required: [true, "Dance Selection cost is required"],
     min: [0, "Cost cannot be negative"],
-    default: 499,
+    default: 5000,
   },
   movieSelection: {
     type: Number,
     required: [true, "Movie Selection cost is required"],
     min: [0, "Cost cannot be negative"],
-    default: 499,
+    default: 5000,
   },
 }, { timestamps: true });
 

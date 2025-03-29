@@ -19,9 +19,9 @@ export async function POST(request) {
     if (!costs) {
       // Use default costs if none set
       costs = {
-        modelWalk: 499,
-        dance: 499,
-        movieSelection: 499,
+        modelWalk: 5000,
+        dance: 5000,
+        movieSelection: 5000,
       };
     }
 

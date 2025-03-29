@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 
 export default function CategoryCostManager() {
   const [costs, setCosts] = useState({
-    modelWalk: 499,
-    dance: 499,
-    movieSelection: 499,
+    modelWalk: 5000,
+    dance: 5000,
+    movieSelection: 5000,
   });
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
