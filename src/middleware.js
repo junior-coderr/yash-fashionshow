@@ -5,7 +5,20 @@ import { verifyToken } from "@/lib/auth";
 const ADMIN_PATHS = ["/admin", "/api/admin"];
 
 export function middleware(request) {
-  const { pathname } = request.nextUrl;
+  const { pathname, origin, hostname } = request.nextUrl;
+  
+  // Check if the request is using HTTP instead of HTTPS
+  // Skip this check for localhost and development environments
+  if (
+    process.env.NODE_ENV === "production" && 
+    !hostname.includes("localhost") &&
+    !hostname.includes("127.0.0.1") &&
+    request.headers.get("x-forwarded-proto") === "http"
+  ) {
+    // Create new URL with https
+    const httpsUrl = `https://${hostname}${request.nextUrl.pathname}${request.nextUrl.search}`;
+    return NextResponse.redirect(httpsUrl, 301);
+  }
 
   // Skip middleware for non-admin routes and login routes
   if (
@@ -74,5 +87,5 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/api/admin/:path*"],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|.*\\.png$).*)'],
 };
