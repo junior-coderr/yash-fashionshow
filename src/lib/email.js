@@ -37,6 +37,8 @@ export async function sendRegistrationConfirmationEmail(registration) {
             ? "Model Selection"
             : category === "movieSelection"
             ? "Movie Selection"
+            : category === "dance"
+            ? "Fashion Designer"
             : "Dance Selection";
         return formatted;
       })
@@ -95,6 +97,8 @@ export async function sendAdminNotificationEmail(registration) {
             ? "Model Selection"
             : category === "movieSelection"
             ? "Movie Selection"
+            : category === "dance"
+            ? "Fashion Designer"
             : "Dance Selection";
         return formatted;
       })

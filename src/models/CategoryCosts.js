@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 const categoryCostsSchema = new Schema({
   modelWalk: {
     type: Number,
-    required: [true, "Model Selection cost is required"],
+    required: [true, "Fashion Designer cost is required"],
     min: [0, "Cost cannot be negative"],
     default: 499,
   },

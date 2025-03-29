@@ -900,6 +900,9 @@ export default function RegistrationForm() {
                           <div className="text-sm text-gray-500">
                             Showcase your style on the runway
                           </div>
+                          {/* <div className="text-sm text-blue-600 font-semibold">
+                            ₹{categoryCosts.modelWalk}
+                          </div> */}
                         </div>
                       </div>
                     </label>
@@ -939,11 +942,14 @@ export default function RegistrationForm() {
                         </span>
                         <div>
                           <div className="font-medium text-gray-900">
-                            Dance Selection
+                            Fashion Designer
                           </div>
                           <div className="text-sm text-gray-500">
-                            Express yourself through dance performance
+                            Express yourself through fashion design
                           </div>
+                          {/* <div className="text-sm text-blue-600 font-semibold"> */}
+                            {/* ₹{categoryCosts.dance} */}
+                          {/* </div> */}
                         </div>
                       </div>
                     </label>
@@ -990,6 +996,9 @@ export default function RegistrationForm() {
                           <div className="text-sm text-gray-500">
                             Participate in movie selection challenge
                           </div>
+                          {/* <div className="text-sm text-blue-600 font-semibold">
+                            ₹{categoryCosts.movieSelection}
+                          </div> */}
                         </div>
                       </div>
                     </label>
@@ -1007,7 +1016,7 @@ export default function RegistrationForm() {
                       <h3 className="text-lg font-semibold text-gray-900">Total Cost</h3>
                       {/* <div className="text-sm text-gray-600">
                         <p>Model Selection: ₹{categoryCosts.modelWalk}</p>
-                        <p>Dance Selection: ₹{categoryCosts.dance}</p>
+                        <p>Fashion Designer: ₹{categoryCosts.dance}</p>
                         <p>Movie Selection: ₹{categoryCosts.movieSelection}</p>
                       </div> */}
                     </div>
@@ -1104,7 +1113,7 @@ export default function RegistrationForm() {
                           ? "Model Selection"
                           : category === "movieSelection"
                           ? "Movie Selection"
-                          : "Dance Selection";
+                          : "Fashion Designer";
                       return formatted;
                     })
                     .join(", ")}
@@ -1397,16 +1406,13 @@ export default function RegistrationForm() {
                           ? "Model Selection"
                           : category === "movieSelection"
                           ? "Movie Selection"
-                          : "Dance Selection";
+                          : "Fashion Designer";
                       return formatted;
                     })
                     .join(", ")}
                 </p>
                 <p className="text-black font-medium mt-2">
-                  Total Amount: ₹
-                  {Object.values(formData.participationCategories).filter(
-                    Boolean
-                  ).length * 499}
+                  Total Amount: ₹{calculateTotalCost()}
                 </p>
                 <p className="text-black font-medium mt-2">
                   Registration Date:{" "}

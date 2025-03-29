@@ -307,7 +307,7 @@ export default function VerifyPage({ params }) {
                           ? "Model Selection"
                           : category === "movieSelection"
                           ? "Movie Selection"
-                          : "Dance Selection";
+                          : "Fashion Designer";
                       return formatted;
                     })
                     .join(", ")}

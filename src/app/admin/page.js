@@ -241,7 +241,16 @@ export default function AdminDashboard() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {Object.entries(reg.participationCategories || {})
                         .filter(([_, v]) => v)
-                        .map(([k]) => k)
+                        .map(([k]) => {
+                          // Format the category names
+                          const formatted = 
+                            k === "modelWalk" 
+                              ? "Model Selection" 
+                              : k === "movieSelection" 
+                              ? "Movie Selection" 
+                              : "Fashion Designer";
+                          return formatted;
+                        })
                         .join(", ")}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
