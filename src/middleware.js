@@ -7,16 +7,14 @@ const ADMIN_PATHS = ["/admin", "/api/admin"];
 export function middleware(request) {
   const { pathname } = request.nextUrl;
   
-  // HTTP to HTTPS redirect
+  // HTTP to HTTPS redirect specifically for production
   const proto = request.headers.get("x-forwarded-proto") || "";
+  const host = request.headers.get("host") || "";
   
-  // For production environments
-  if (proto === "http") {
-    // Create new URL with https but preserve the original hostname
-    const httpsUrl = request.nextUrl.clone();
-    httpsUrl.protocol = "https:";
-    // Make sure to keep the original hostname
-    httpsUrl.port = "";
+  // Only redirect HTTP to HTTPS in production and when using HTTP
+  if (proto === "http" && !host.includes("localhost") && !host.includes("127.0.0.1")) {
+    // Create the HTTPS URL while keeping the original host name
+    const httpsUrl = `https://${host}${pathname}${request.nextUrl.search}`;
     return NextResponse.redirect(httpsUrl, 301);
   }
 
@@ -27,7 +25,7 @@ export function middleware(request) {
     // Log for debugging purposes
     console.log("Redirecting to HTTPS from HTTP (simulation)");
     
-    // Remove the simulation parameter if present
+    // For local testing only
     url.searchParams.delete('simulateHttp');
     url.protocol = "https:";
     return NextResponse.redirect(url.toString(), 301);
