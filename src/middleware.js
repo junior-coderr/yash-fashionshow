@@ -7,12 +7,28 @@ const ADMIN_PATHS = ["/admin", "/api/admin"];
 export function middleware(request) {
   const { pathname } = request.nextUrl;
   
-  // HTTP to HTTPS redirect - specifically for Heroku and other hosting platforms
+  // HTTP to HTTPS redirect
   const proto = request.headers.get("x-forwarded-proto") || "";
   
-  // For Heroku and similar hosting platforms
+  // For production environments
   if (proto === "http") {
-    const url = new URL(request.url);
+    // Create new URL with https but preserve the original hostname
+    const httpsUrl = request.nextUrl.clone();
+    httpsUrl.protocol = "https:";
+    // Make sure to keep the original hostname
+    httpsUrl.port = "";
+    return NextResponse.redirect(httpsUrl, 301);
+  }
+
+  // TESTING ONLY: For local development with simulation parameter
+  const url = new URL(request.url);
+  const simulateHttp = url.searchParams.get('simulateHttp') === 'true';
+  if (simulateHttp) {
+    // Log for debugging purposes
+    console.log("Redirecting to HTTPS from HTTP (simulation)");
+    
+    // Remove the simulation parameter if present
+    url.searchParams.delete('simulateHttp');
     url.protocol = "https:";
     return NextResponse.redirect(url.toString(), 301);
   }
