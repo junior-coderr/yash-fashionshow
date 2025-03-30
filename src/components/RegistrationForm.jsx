@@ -1611,7 +1611,7 @@ export default function RegistrationForm() {
             reserved.
           </p>
           <p className="mt-1 text-sm text-gray-600">
-            For any queries, contact us at: support@fashionshow.com
+            For any queries, contact us at: thestylesymphony5@gmail.com
           </p>
         </footer>
 

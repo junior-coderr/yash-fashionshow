@@ -348,7 +348,7 @@ function getRegistrationConfirmationTemplate({
         </div>
         <div class="footer">
           <p>© ${new Date().getFullYear()} Fashion Show Event. All rights reserved.</p>
-          <p>For any queries, contact us at: support@fashionshow.com</p>
+          <p>For any queries, contact us at: thestylesymphony5@gmail.com</p>
         </div>
       </div>
     </body>
@@ -643,7 +643,7 @@ function getEmailVerificationTemplate({
         </div>
         <div class="footer">
           <p>© ${new Date().getFullYear()} Fashion Show Event. All rights reserved.</p>
-          <p>For any queries, contact us at: support@fashionshow.com</p>
+          <p>For any queries, contact us at: thestylesymphony5@gmail.com</p>
         </div>
       </div>
     </body>
